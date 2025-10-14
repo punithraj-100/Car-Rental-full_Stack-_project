@@ -18,7 +18,9 @@ Car Rental is a modern, full-stack web application for renting cars. Built with 
 
 ## ✨ Overview  
 
-![Homepage Screenshot](./assets/homePage.png)
+![Homepage Screenshot](./client/src/assets/homePage.png)
+
+![Homepage Screenshot](./client/src/assets/dashboard.png)
 
 **Live URL:** `https://car-rental-alpha-rose.vercel.app`  
   
