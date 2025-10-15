@@ -15,6 +15,11 @@ export const registerUser = async (req, res)=>{
     try {
         const {name, email, password} = req.body
 
+        if(password.length<8){
+            return res.json({success: false, message: 'password should be minimum 8 Characters!'})
+
+        }
+
         if(!name || !email || !password || password.length < 8){
             return res.json({success: false, message: 'Fill all the fields'})
         }
