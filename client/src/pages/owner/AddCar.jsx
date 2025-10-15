@@ -106,6 +106,9 @@ const AddCar = () => {
               <option value="Sedan">Sedan</option>
               <option value="SUV">SUV</option>
               <option value="Van">Van</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Luxury car">Luxury car</option>
+              <option value="Electric Vehicle">EV</option>
             </select>
           </div>
         </div>
@@ -143,10 +146,17 @@ const AddCar = () => {
             <label>Location</label>
             <select onChange={e=> setCar({...car, location: e.target.value})} value={car.location} className='px-3 py-2 mt-1 border border-borderColor rounded-md outline-none'>
               <option value="">Select a location</option>
-              <option value="New York">New York</option>
-              <option value="Los Angeles">Los Angeles</option>
-              <option value="Houston">Houston</option>
-              <option value="Chicago">Chicago</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Mysuru">Mysuru</option>
+              <option value="Mandya">Mandya</option>
+              <option value="Mangaluru">Mangaluru</option>
+              <option value="Kolara">Kolara</option>
+              <option value="Hubballi-Dharwad">Hubballi-Dharwad</option>
+              <option value="Ramnagara">Ramnagara</option>
+              <option value="Udupi">Udupi</option>
+              <option value="Ballari">Ballari</option>
+              <option value="Shivamogga">Shivamogga</option>
+
             </select>
          </div>
         {/* Car Description */}
