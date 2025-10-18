@@ -4,11 +4,20 @@ import jwt from 'jsonwebtoken'
 import Car from "../models/Car.js";
 
 
-// Generate JWT Token
-const generateToken = (userId)=>{
-    const payload = userId;
-    return jwt.sign(payload, process.env.JWT_SECRET)
-}
+// Generate JWT Token (Improved Version)
+const generateToken = (userId) => {
+  // 1. The payload is now an object.
+  const payload = {
+    id: userId,
+  };
+
+  // 2. We've added an expiration time in the options.
+  const options = {
+    expiresIn: '2d'//Token will expire in 3 day 
+  };
+
+  return jwt.sign(payload, process.env.JWT_SECRET, options);
+};
 
 // Register User
 export const registerUser = async (req, res)=>{
