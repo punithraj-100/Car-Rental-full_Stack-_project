@@ -32,7 +32,8 @@ const CarDetails = () => {
         toast.error(data.message)
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error("For booking the car plz login!")
+
     }
   }
 
