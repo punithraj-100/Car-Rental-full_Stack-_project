@@ -62,13 +62,16 @@ export const AppProvider = ({ children })=>{
         const token = localStorage.getItem('token')
         setToken(token)
         fetchCars()
+        
     },[])
 
     // useEffect to fetch user data when token is available
     useEffect(()=>{
         if(token){
-            axios.defaults.headers.common['Authorization'] = `${token}`
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
             fetchUser()
+            
+            
         }
     },[token])
 
