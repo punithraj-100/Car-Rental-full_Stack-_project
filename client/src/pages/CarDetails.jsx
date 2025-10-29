@@ -138,7 +138,7 @@ const CarDetails = () => {
             <div className='flex flex-col gap-2'>
               <label htmlFor="return-date">Return Date</label>
               <input value={returnDate} onChange={(e)=>setReturnDate(e.target.value)}
-              type="date" className='border border-borderColor px-3 py-2 rounded-lg' required id='return-date'/>
+              type="date" className='border border-borderColor px-3 py-2 rounded-lg' required id='return-date'min={pickupDate}/>
             </div>
 
             <button className='w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer'>Book Now</button>
