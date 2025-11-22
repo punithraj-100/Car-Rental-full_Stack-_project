@@ -1,0 +1,20 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  # This is your Node.js backend service
+  server:
+    build: ./server
+    ports:
+      - "3000:3000"  # Maps host port 5000 to container port 5000
+    env_file:
+      - ./server/.env  # Passes your .env file to the container
+
+  # This is your React frontend service
+  client:
+    build: ./client
+    ports:
+      - "5173:80"  # Maps host port 5173 to Nginx's port 80
+    depends_on:
+      - server     # Tells Docker to start the server first

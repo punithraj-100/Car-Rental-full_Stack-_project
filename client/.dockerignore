@@ -1,0 +1,4 @@
+# client/.dockerignore
+node_modules
+.env
+dist

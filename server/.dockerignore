@@ -1,0 +1,3 @@
+# server/.dockerignore
+node_modules
+.env
