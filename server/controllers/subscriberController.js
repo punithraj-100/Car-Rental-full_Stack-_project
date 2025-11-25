@@ -36,7 +36,7 @@ export const subscribeUser = async (req, res) => {
                         At Vishwas Wheels, we believe in trust and quality. Whether you're looking for a weekend getaway ride or a long-term rental, we've got you covered.
                     </p>
                     <div style="text-align: center; margin-top: 30px;">
-                        <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}" style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Browse Cars</a>
+                        <a href="${process.env.CLIENT_URL || 'https://car-rental-alpha-rose.vercel.app'}" style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Browse Cars</a>
                     </div>
                 </div>
                 <div style="text-align: center; margin-top: 30px; font-size: 12px; color: #999;">
