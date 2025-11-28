@@ -5,6 +5,7 @@ import Loader from '../components/Loader'
 import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 import { motion } from 'motion/react'
+import Map from '../components/Map'
 
 const CarDetails = () => {
 
@@ -155,8 +156,13 @@ const CarDetails = () => {
                     </li>
                   ))
                 }
-
               </ul>
+            </div>
+
+            {/* Map Section */}
+            <div>
+              <h1 className='text-xl font-medium mb-3'>Location</h1>
+              <Map latitude={car.latitude || 12.9716} longitude={car.longitude || 77.5946} locationName={car.location} />
             </div>
 
             {/* Reviews Section */}
