@@ -111,7 +111,7 @@ export const forgotPassword = async (req, res) => {
         await user.save();
 
         // Create Reset URL
-        const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
+        const resetUrl = `${process.env.CLIENT_URL || 'https://car-rental-alpha-rose.vercel.app'}/reset-password/${resetToken}`;
 
         const message = `
             <h1>You have requested a password reset</h1>
