@@ -10,9 +10,7 @@ import Map from '../components/Map'
 const CarDetails = () => {
 
   const { id } = useParams()
-
   const { cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate } = useAppContext()
-
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
   const currency = import.meta.env.VITE_CURRENCY
@@ -61,26 +59,84 @@ const CarDetails = () => {
     }
   };
 
+  const initPayment = (order, booking) => {
+    const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+
+    if (!razorpayKey) {
+      toast.error("Razorpay Key ID is missing. Check your client .env file.");
+      return;
+    }
+
+    const options = {
+      key: razorpayKey,
+      amount: order.amount,
+      currency: order.currency,
+      name: "Vishwas Wheels",
+      description: `Booking for ${car.brand} ${car.model}`,
+      image: assets.logo,
+      order_id: order.id,
+      handler: async (response) => {
+        try {
+          const { data } = await axios.post('/api/payment/verify', {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            bookingId: booking._id
+          });
+
+          if (data.success) {
+            toast.success("Payment Successful! Booking Confirmed.");
+            navigate('/my-bookings');
+          } else {
+            toast.error("Payment Verification Failed");
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Payment Verification Failed");
+        }
+      },
+      prefill: {
+        name: "User Name",
+        email: "user@example.com",
+        contact: "9999999999"
+      },
+      theme: {
+        color: "#3399cc"
+      }
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/api/bookings/create', {
+      // 1. Create Booking (Pending)
+      const { data: bookingData } = await axios.post('/api/bookings/create', {
         car: id,
         pickupDate,
         returnDate
       })
 
-      if (data.success) {
-        toast.success(data.message)
-        navigate('/my-bookings')
+      if (bookingData.success) {
+        // 2. Create Razorpay Order
+        const { data: orderData } = await axios.post('/api/payment/create-order', {
+          amount: bookingData.booking.price
+        });
+
+        if (orderData.success) {
+          initPayment(orderData.order, bookingData.booking);
+        } else {
+          toast.error("Failed to initiate payment");
+        }
       } else {
-        toast.error(data.message)
+        toast.error(bookingData.message)
       }
     } catch (error) {
-      toast.error("For booking the car plz login!")
-
+      console.log(error);
+      toast.error("Something went wrong. Please try again.");
     }
-  }
+  };
 
   useEffect(() => {
     setCar(cars.find(car => car._id === id))

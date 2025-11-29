@@ -7,6 +7,7 @@ import ownerRouter from "./routes/ownerRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 import reviewRouter from "./routes/reviewRoutes.js";
 import subscriberRouter from "./routes/subscriberRoutes.js";
+import paymentRouter from "./routes/paymentRoutes.js";
 import startCronJobs from "./jobs/cronJobs.js";
 
 // Initialize Express App
@@ -28,6 +29,7 @@ app.use('/api/owner', ownerRouter)
 app.use('/api/bookings', bookingRouter)
 app.use('/api/reviews', reviewRouter)
 app.use('/api/subscribers', subscriberRouter)
+app.use('/api/payment', paymentRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
