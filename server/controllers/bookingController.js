@@ -115,3 +115,27 @@ export const changeBookingStatus = async (req, res) => {
         res.json({ success: false, message: error.message })
     }
 }
+
+// API to check if user has booked a specific car
+export const checkBookingStatus = async (req, res) => {
+    try {
+        const { _id } = req.user;
+        const { carId } = req.body;
+
+        const booking = await Booking.findOne({
+            user: _id,
+            car: carId,
+            paymentStatus: 'paid'
+        }).populate('owner', 'name email');
+
+        if (booking) {
+            res.json({ success: true, isBooked: true, owner: booking.owner });
+        } else {
+            res.json({ success: true, isBooked: false });
+        }
+
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+}

@@ -47,7 +47,9 @@ export const verifyPayment = async (req, res) => {
             booking.status = "confirmed";
             await booking.save();
 
-            res.status(200).json({ success: true, message: "Payment verified successfully" });
+            await booking.populate('owner', 'name email');
+
+            res.status(200).json({ success: true, message: "Payment verified successfully", owner: booking.owner });
         } else {
             res.status(400).json({ success: false, message: "Invalid signature sent!" });
         }

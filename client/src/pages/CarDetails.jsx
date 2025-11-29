@@ -10,7 +10,7 @@ import Map from '../components/Map'
 const CarDetails = () => {
 
   const { id } = useParams()
-  const { cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate } = useAppContext()
+  const { cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate, user } = useAppContext()
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
   const currency = import.meta.env.VITE_CURRENCY
@@ -18,6 +18,8 @@ const CarDetails = () => {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
+  const [ownerDetails, setOwnerDetails] = useState(null);
+  const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
 
   const fetchReviews = async () => {
     try {
@@ -35,6 +37,25 @@ const CarDetails = () => {
       fetchReviews();
     }
   }, [id]);
+
+  const checkBookingStatus = async () => {
+    try {
+      if (!user) return;
+      const { data } = await axios.post('/api/bookings/check-status', { carId: id });
+      if (data.success && data.isBooked) {
+        setIsPaymentCompleted(true);
+        setOwnerDetails(data.owner);
+      }
+    } catch (error) {
+      console.error("Failed to check booking status", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && id) {
+      checkBookingStatus();
+    }
+  }, [user, id]);
 
   const averageRating = reviews.length > 0
     ? (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)
@@ -86,7 +107,9 @@ const CarDetails = () => {
 
           if (data.success) {
             toast.success("Payment Successful! Booking Confirmed.");
-            navigate('/my-bookings');
+            setOwnerDetails(data.owner);
+            setIsPaymentCompleted(true);
+            // navigate('/my-bookings');
           } else {
             toast.error("Payment Verification Failed");
           }
@@ -221,6 +244,41 @@ const CarDetails = () => {
               <Map latitude={car.latitude || 12.9716} longitude={car.longitude || 77.5946} locationName={car.location} />
             </div>
 
+            {/* Owner Details Section */}
+            <div className='mt-8'>
+              <h1 className='text-xl font-medium mb-3'>Owner Details</h1>
+              {!isPaymentCompleted ? (
+                <div className='flex items-center gap-4 bg-gray-100 p-6 rounded-xl border border-gray-200 opacity-80'>
+                  <div className='bg-gray-300 p-3 rounded-full'>
+                    <span className='text-2xl'>🔒</span>
+                  </div>
+                  <div>
+                    <p className='text-lg font-semibold text-gray-700'>Contact Hidden</p>
+                    <p className='text-sm text-gray-500'>Book this car to reveal owner details.</p>
+                  </div>
+                </div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className='bg-blue-50 border border-blue-200 p-6 rounded-xl'
+                >
+                  <div className='flex items-center gap-4 mb-4'>
+                    <div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl'>
+                      {ownerDetails?.name?.[0] || 'O'}
+                    </div>
+                    <div>
+                      <h3 className='text-lg font-bold text-gray-800'>{ownerDetails?.name}</h3>
+                      <p className='text-gray-600'>{ownerDetails?.email}</p>
+                    </div>
+                  </div>
+                  <button className='w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors'>
+                    Call Now
+                  </button>
+                </motion.div>
+              )}
+            </div>
+
             {/* Reviews Section */}
             <div className='mt-12'>
               <h1 className='text-2xl font-bold mb-6'>Reviews & Ratings</h1>
@@ -324,7 +382,9 @@ const CarDetails = () => {
               type="date" className='border border-borderColor px-3 py-2 rounded-lg' required id='return-date' min={pickupDate} />
           </div>
 
-          <button className='w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer'>Book Now</button>
+          <button disabled={isPaymentCompleted} className={`w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer ${isPaymentCompleted ? 'opacity-50 cursor-not-allowed' : ''}`}>
+            {isPaymentCompleted ? 'Booking Confirmed' : 'Book Now'}
+          </button>
 
           <p className='text-center text-sm'>No credit card required to reserve</p>
 
