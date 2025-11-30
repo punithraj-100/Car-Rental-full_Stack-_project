@@ -7,7 +7,7 @@ import { motion } from 'motion/react'
 
 const MyBookings = () => {
 
-  const { axios, user, currency } = useAppContext()
+  const { axios, user, currency, navigate } = useAppContext()
 
   const [bookings, setBookings] = useState([])
 
@@ -47,19 +47,26 @@ const MyBookings = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.4 }}
 
-            key={booking._id} className='grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12'>
-            
+            key={booking._id}
+            onClick={() => {
+              if (booking.car && booking.car._id) {
+                navigate(`/car-details/${booking.car._id}`)
+                window.scrollTo(0, 0)
+              }
+            }}
+            className='grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12 cursor-pointer hover:bg-gray-50 transition-colors'>
+
             {/* --- Car Image + Info (FIXED FOR DELETED CARS) --- */}
             <div className='md:col-span-1'>
               <div className='rounded-md overflow-hidden mb-3'>
                 {/* Safe access to image with ?. */}
-                <img 
-                    src={booking.car?.image} 
-                    alt={booking.car?.name || 'Car Unavailable'} 
-                    className='w-full h-auto aspect-video object-cover' 
+                <img
+                  src={booking.car?.image}
+                  alt={booking.car?.name || 'Car Unavailable'}
+                  className='w-full h-auto aspect-video object-cover'
                 />
               </div>
-              
+
               {/* Fallback text if car is deleted */}
               <p className='text-lg font-medium mt-2'>
                 {booking.car ? `${booking.car.brand} ${booking.car.model}` : "Car No Longer Available"}
@@ -74,24 +81,24 @@ const MyBookings = () => {
             <div className='md:col-span-2'>
               <div className='flex items-center gap-2'>
                 <p className='px-3 py-1.5 bg-light rounded'>Booking #{index + 1}</p>
-                
+
                 {/* Specific Status Styling */}
                 {booking.status === 'confirmed' && (
-                    <p className="px-3 py-1 text-xs rounded-full bg-green-400/15 text-green-600">Confirmed</p>
+                  <p className="px-3 py-1 text-xs rounded-full bg-green-400/15 text-green-600">Confirmed</p>
                 )}
-                
+
                 {booking.status === 'cancelled' && (
-                    <p className="px-3 py-1 text-xs rounded-full bg-red-400/15 text-red-600">Cancelled</p>
+                  <p className="px-3 py-1 text-xs rounded-full bg-red-400/15 text-red-600">Cancelled</p>
                 )}
 
                 {booking.status === 'pending' && (
-                    <p className="px-3 py-1 text-xs rounded-full bg-yellow-400/15 text-yellow-600">Pending</p>
+                  <p className="px-3 py-1 text-xs rounded-full bg-yellow-400/15 text-yellow-600">Pending</p>
                 )}
 
                 {booking.status === 'timeout' && (
-                    <p className="px-3 py-1 text-xs rounded-full bg-orange-400/15 text-orange-600 font-medium">
-                        Owner Not Responded
-                    </p>
+                  <p className="px-3 py-1 text-xs rounded-full bg-orange-400/15 text-orange-600 font-medium">
+                    Owner Not Responded
+                  </p>
                 )}
               </div>
 

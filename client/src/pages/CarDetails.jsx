@@ -43,7 +43,6 @@ const CarDetails = () => {
       if (!user) return;
       const { data } = await axios.post('/api/bookings/check-status', { carId: id });
       if (data.success && data.isBooked) {
-        setIsPaymentCompleted(true);
         setOwnerDetails(data.owner);
       }
     } catch (error) {
@@ -247,7 +246,7 @@ const CarDetails = () => {
             {/* Owner Details Section */}
             <div className='mt-8'>
               <h1 className='text-xl font-medium mb-3'>Owner Details</h1>
-              {!isPaymentCompleted ? (
+              {!ownerDetails ? (
                 <div className='flex items-center gap-4 bg-gray-100 p-6 rounded-xl border border-gray-200 opacity-80'>
                   <div className='bg-gray-300 p-3 rounded-full'>
                     <span className='text-2xl'>🔒</span>
@@ -386,7 +385,7 @@ const CarDetails = () => {
             {isPaymentCompleted ? 'Booking Confirmed' : 'Book Now'}
           </button>
 
-          <p className='text-center text-sm'>No credit card required to reserve</p>
+          {/* <p className='text-center text-sm'>No credit card required to reserve</p> */}
 
         </motion.form>
       </div>
