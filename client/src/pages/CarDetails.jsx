@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { assets, dummyCarData } from '../assets/assets'
+import { assets, dummyCarData, cityCoordinates } from '../assets/assets'
 import Loader from '../components/Loader'
 import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
@@ -240,7 +240,19 @@ const CarDetails = () => {
             {/* Map Section */}
             <div>
               <h1 className='text-xl font-medium mb-3'>Location</h1>
-              <Map latitude={car.latitude || 12.9716} longitude={car.longitude || 77.5946} locationName={car.location} />
+              <Map
+                latitude={
+                  (cityCoordinates[car.location] && (car.latitude === 12.9716 || !car.latitude))
+                    ? cityCoordinates[car.location].lat
+                    : (car.latitude || 12.9716)
+                }
+                longitude={
+                  (cityCoordinates[car.location] && (car.longitude === 77.5946 || !car.longitude))
+                    ? cityCoordinates[car.location].lng
+                    : (car.longitude || 77.5946)
+                }
+                locationName={car.location}
+              />
             </div>
 
             {/* Owner Details Section */}

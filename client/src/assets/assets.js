@@ -42,7 +42,20 @@ import car_image3 from "./car_image3.png"
 import car_image4 from "./car_image4.png"
 
 
-export const cityList = ['Bengaluru','Mysuru','Mangaluru','Mandya','Kolara','Hubballi-Dharwad','Ramnagara','Udupi','Ballari','Shivamogga']
+export const cityList = ['Bengaluru', 'Mysuru', 'Mangaluru', 'Mandya', 'Kolara', 'Hubballi-Dharwad', 'Ramnagara', 'Udupi', 'Ballari', 'Shivamogga']
+
+export const cityCoordinates = {
+    "Bengaluru": { lat: 12.9716, lng: 77.5946 },
+    "Mysuru": { lat: 12.2958, lng: 76.6394 },
+    "Mandya": { lat: 12.5206, lng: 76.8951 },
+    "Mangaluru": { lat: 12.9141, lng: 74.8560 },
+    "Kolara": { lat: 13.1363, lng: 78.1292 },
+    "Hubballi-Dharwad": { lat: 15.3647, lng: 75.1240 },
+    "Ramnagara": { lat: 12.7209, lng: 77.2799 },
+    "Udupi": { lat: 13.3409, lng: 74.7421 },
+    "Ballari": { lat: 15.1394, lng: 76.9214 },
+    "Shivamogga": { lat: 13.9299, lng: 75.5681 },
+}
 
 export const assets = {
     logo,
@@ -103,11 +116,11 @@ export const ownerMenuLinks = [
 ]
 
 export const dummyUserData = {
-  "_id": "6847f7cab3d8daecdb517095",
-  "name": "GreatStack",
-  "email": "admin@example.com",
-  "role": "owner",
-  "image": user_profile,
+    "_id": "6847f7cab3d8daecdb517095",
+    "name": "GreatStack",
+    "email": "admin@example.com",
+    "role": "owner",
+    "image": user_profile,
 }
 
 export const dummyCarData = [
