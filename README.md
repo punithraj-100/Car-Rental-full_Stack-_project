@@ -18,9 +18,9 @@ Vishwas Wheels is a modern, full-stack web application for renting cars. Built w
 
 ## ✨ Overview  
 
-![Homepage Screenshot](CarRental/client/src/assets/car12.png)
+![Homepage Screenshot](./client/src/assets/car12.png)
 
-![Homepage Screenshot](CarRental/client/src/assets/car13.png)
+![Homepage Screenshot](./client/src/assets/car13.png)
 
 **Live URL:** https://car-rental-alpha-rose.vercel.app  
   
