@@ -11,16 +11,16 @@
 </p>  
 
 <p align="center">
-Car Rental is a modern, full-stack web application for renting cars. Built with the MERN stack (MongoDB, Express.js, React, Node.js) and styled with Tailwind CSS, this project provides a seamless and trustworthy experience for both customers and owners.
+Vishwas Wheels is a modern, full-stack web application for renting cars. Built with the MERN stack (MongoDB, Express.js, React, Node.js) and styled with Tailwind CSS, this project provides a seamless and trustworthy experience for both customers and owners.
 </p>  
 
 ---
 
 ## ✨ Overview  
 
-![Homepage Screenshot](./client/src/assets/homePage.png)
+![Homepage Screenshot](CarRental/client/src/assets/car12.png)
 
-![Homepage Screenshot](./client/src/assets/dashboard.png)
+![Homepage Screenshot](CarRental/client/src/assets/car13.png)
 
 **Live URL:** https://car-rental-alpha-rose.vercel.app  
   
@@ -35,6 +35,8 @@ Car Rental is a modern, full-stack web application for renting cars. Built with 
 * **Booking System**: Users can select pickup and return dates to book a car.
 * **Admin Dashboard**: A dedicated interface for owners to see the dashboard and add car, manage cars,manage bookings.
 * **Responsive Design**: A clean and modern UI that works on all devices, built with Tailwind CSS and animated with the motion.
+* **payment Integration**: Integrated the Razorpay Payment Gateway with signature verification to handle transactions securely.
+* **Automated Workflow**: Implemented Server-Side Cron Jobs to automatically cancel ignored booking requests, ensuring the system doesn't stall.
  
 
 ---
